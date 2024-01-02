@@ -19,7 +19,7 @@ jobs:
       - run: sudo apt-get install cmake libboost-program-options-dev -y
       - run: mkdir .build
       - run: cd .build
-      - run: cmake -DBUILD_SHARED_LIBS=TRUE . -DPATCH_VERSION=${{ github.run_number }}
+      - run: cmake .. -DPATCH_VERSION=${{ github.run_number }}
       - run: cmake --build . --config Release
       - run: cmake --build . --target package
       - run: ./helloworld/boost_tests/boost_tests

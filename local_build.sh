@@ -2,7 +2,7 @@ if ! test -d .build; then
     mkdir .build
 fi
 cd ~/projects/otus_labs/.build
-cmake -DBUILD_SHARED_LIBS=TRUE ..
+cmake ..
 cmake --build . --config Release
 cmake --build . --target package
 
