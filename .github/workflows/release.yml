@@ -1,0 +1,50 @@
+name: 'C++ CI'
+
+on:
+  push:
+    branches:
+      - '*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+      - run: sudo apt-get update
+      - run: sudo apt-get install cmake libboost-test-dev -y
+      - run: sudo apt-get install cmake libboost-program-options-dev -y
+      - run: mkdir .build
+      - run: cd .build
+      - run: cmake -DBUILD_SHARED_LIBS=TRUE . -DPATCH_VERSION=${{ github.run_number }}
+      - run: cmake --build . --config Release
+      - run: cmake --build . --target package
+      - run: ./helloworld/boost_tests/boost_tests
+      - run: ./helloworld/gtests/gtests
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.run_number }}
+          release_name: Release ${{ github.run_number }}
+          draft: false
+          prerelease: false
+      # - name: Upload Release Asset
+      #   id: upload-release-asset
+      #   uses: actions/upload-release-asset@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     upload_url: ${{ steps.create_release.outputs.upload_url }}
+      #     asset_path: ./helloworld-0.0.${{ github.run_number }}-Linux.deb
+      #     asset_name: helloworld-0.0.${{ github.run_number }}-Linux.deb
+      #     asset_content_type: application/vnd.debian.binary-package
