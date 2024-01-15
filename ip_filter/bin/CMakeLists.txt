@@ -4,7 +4,7 @@ project(${PROJECT_ID} VERSION ${PROJECT_VESRION})
 
 add_executable(${PROJECT_ID} main.cpp)
 
-configure_file(ip_filter.txt ip_filter.txt COPYONLY)
+configure_file(input.txt input.txt COPYONLY)
 
 set_target_properties(${PROJECT_ID} PROPERTIES
     CXX_STANDARD 20

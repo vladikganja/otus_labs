@@ -89,6 +89,16 @@ auto filter_any(
 
 int main()
 try {
+#ifdef LOCAL_INPUT
+    std::ifstream in("input.txt");
+    if (in.is_open()) {
+        std::cout << "local input\n";
+    } else {
+        std::cout << "can't open file\n";
+        return EXIT_FAILURE;
+    }
+    std::cin.rdbuf(in.rdbuf());
+#endif
     std::vector<std::vector<std::string>> ip_pool;
 
     for (std::string line; std::getline(std::cin, line);) {

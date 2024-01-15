@@ -2,7 +2,7 @@ if ! test -d .build; then
     mkdir .build
 fi
 cd ~/projects/otus_labs/.build
-cmake ..
+cmake -DLOCAL_INPUT=on ..
 cmake --build . --config Release
 cmake --build . --target package
 
