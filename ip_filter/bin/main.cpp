@@ -90,7 +90,7 @@ auto filter_any(
 int main()
 try {
 #ifdef LOCAL_INPUT
-    std::ifstream in("input.txt");
+    std::ifstream in("./ip_filter/bin/input.txt");
     if (in.is_open()) {
         std::cout << "local input\n";
     } else {
