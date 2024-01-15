@@ -4,3 +4,4 @@ project(OTUS_LABS)
 
 add_subdirectory(3rdparty/googletest)
 add_subdirectory(helloworld)
+add_subdirectory(ip_filter)
